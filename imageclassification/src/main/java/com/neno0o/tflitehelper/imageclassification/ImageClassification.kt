@@ -6,11 +6,17 @@ import org.tensorflow.lite.Interpreter
 import java.nio.ByteBuffer
 import java.nio.ByteOrder.nativeOrder
 
+/**
+ * The model type used for classification. Make sure the trained model is correctly matched with its type.
+ */
 enum class ClassifierModel {
     FLOAT,
     QUANTIZED
 }
 
+/**
+ * Abstract class that is used for classification.
+ */
 abstract class ImageClassification protected constructor(
     val interpreter: Interpreter,
     val labelList: List<String>,
@@ -24,6 +30,9 @@ abstract class ImageClassification protected constructor(
             .order(nativeOrder())
     }
 
+    /**
+     * Returns a list of [Recognizable] objects from image.
+     */
     fun classifyImage(bitmap: Bitmap): List<Recognizable> {
         convertBitmapToByteBuffer(bitmap)
 
@@ -32,16 +41,34 @@ abstract class ImageClassification protected constructor(
         return getResult()
     }
 
+    /**
+     * Closes the interpreter.
+     */
     fun close() {
         interpreter.close()
     }
 
+    /**
+     * The number of bytes that is used to store a single color.
+     *
+     * In case of [ClassifierModel.QUANTIZED], the result is 1.
+     * [ClassifierModel.FLOAT], the result is 4.
+     */
     protected abstract fun byteNumbersPerChannel(): Int
 
+    /**
+     * Add pixel value to the byte buffer.
+     */
     protected abstract fun addPixelValueToBuffer(pixelValue: Int)
 
+    /**
+     * Gets the normalized probability for the indexed label, this will represent the confidence.
+     */
     protected abstract fun normalizedProbability(labelIndex: Int): Float
 
+    /**
+     * Run the [Interpreter].
+     */
     protected abstract fun runInterpreter()
 
     private fun convertBitmapToByteBuffer(bitmap: Bitmap) {
@@ -82,12 +109,39 @@ abstract class ImageClassification protected constructor(
     }
 
     companion object {
+        /**
+         * The default number of results to show.
+         */
         private const val DEFAULT_MAX_RESULTS = 3 // nu of results to show on UI
-        private const val DEFAULT_CONFIDENCE_THRESHOLD = 0.1f
-        private const val DEFAULT_INPUT_SIZE = 224
-        private const val BATCH_SIZE = 1 // dimensions of input
-        private const val PIXEL_SIZE = 3 // dimensions of input
 
+        /**
+         * The default confidence threshold, [classifyImage] will return all [Recognizable] objects whose confidence more than this value.
+         */
+        private const val DEFAULT_CONFIDENCE_THRESHOLD = 0.1f
+
+        /**
+         * The default input size that is used in the model.
+         */
+        private const val DEFAULT_INPUT_SIZE = 224
+
+        /**
+         * Dimensions of inputs.
+         */
+        private const val BATCH_SIZE = 1
+        private const val PIXEL_SIZE = 3
+
+        /**
+         * Factory method, which returns [ImageClassification] based on the model type [ClassifierModel].
+         *
+         * [assetManager] provides access to an application's raw asset files.
+         * [modelPath] the path name of the model.
+         * [labelList] the labels list name.
+         * [inputSize] the size that is used in the model.
+         * [interpreterOptions] the options that will be used by [Interpreter].
+         * [numberOfResults] the number of results to show.
+         * [confidenceThreshold] the threshold confidence, [classifyImage] will return results whose confidence more than this value.
+         *
+         */
         fun create(
             classifierModel: ClassifierModel,
             assetManager: AssetManager,
@@ -124,7 +178,10 @@ abstract class ImageClassification protected constructor(
     }
 }
 
-internal class QuantizedClassifier(
+/**
+ * A concrete implementation of [ImageClassification] of type [ClassifierModel.QUANTIZED].
+ */
+private class QuantizedClassifier(
     interpreter: Interpreter,
     labelList: List<String>,
     inputSize: Int,
@@ -153,7 +210,10 @@ internal class QuantizedClassifier(
     }
 }
 
-internal class FloatClassifier(
+/**
+ * A concrete implementation of [ImageClassification] of type [ClassifierModel.FLOAT].
+ */
+private class FloatClassifier(
     interpreter: Interpreter,
     labelList: List<String>,
     inputSize: Int,
