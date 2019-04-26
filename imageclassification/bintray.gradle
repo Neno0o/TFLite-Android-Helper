@@ -1,0 +1,101 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+group = PUBLISHED_GROUP_ID
+version = LIBRARY_VERSION
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'aar'
+            groupId PUBLISHED_GROUP_ID
+                artifactId ARTIFACT
+
+                name LIBRARY_NAME
+                description LIBRARY_DESCRIPTION
+                url SITE_URL
+
+                licenses {
+                    license {
+                        name LICENSE_NAME
+                            url LICENSE_URL
+                    }
+                }
+            developers {
+                developer {
+                    id DEVELOPER_ID
+                        name DEVELOPER_NAME
+                        email DEVELOPER_EMAIL
+                }
+            }
+            scm {
+                connection GIT_URL
+                    developerConnection GIT_URL
+                    url SITE_URL
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+        archives sourcesJar
+}
+
+bintray {
+    Properties properties = new Properties()
+    File localPropFile = project.rootProject.file('local.properties')
+
+    // If deployment from local repo, then fetch user and api key from local.properties. Otherwise, get them from Travis env remotely
+    if (localPropFile.exists()) {
+        properties.load(localPropFile.newDataInputStream())
+    } else {
+        if (System.getenv('BINTRAY_USER') != null) {
+            properties.setProperty("bintray.user", System.getenv('BINTRAY_USER'))
+        }
+
+        if (System.getenv('BINTRAY_API_KEY') != null) {
+            properties.setProperty("bintray.apikey", System.getenv('BINTRAY_API_KEY'))
+        }
+    }
+
+    if (properties.getProperty("bintray.user") != null) {
+        user = properties.getProperty("bintray.user")
+    }
+
+    if (properties.getProperty("bintray.apikey") != null) {
+        key = properties.getProperty("bintray.apikey")
+    }
+
+    configurations = ['archives']
+    pkg {
+        repo = BINTRAY_REPO
+        name = BINRTAY_NAME
+        desc = LIBRARY_DESCRIPTION
+        websiteUrl = SITE_URL
+        vcsUrl = GIT_URL
+        licenses = ['MIT']
+        dryRun = false
+        publish = true
+        override = false
+        publicDownloadNumbers = true
+        version {
+            desc = LIBRARY_DESCRIPTION
+        }
+    }
+}

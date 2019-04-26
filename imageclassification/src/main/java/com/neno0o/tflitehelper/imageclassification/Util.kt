@@ -3,10 +3,14 @@ package com.neno0o.tflitehelper.imageclassification
 import android.content.res.AssetManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import java.io.*
+import java.io.ByteArrayInputStream
+import java.io.FileInputStream
+import java.io.InputStreamReader
+import java.io.BufferedReader
+import java.io.IOException
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
-import java.util.*
+import java.util.PriorityQueue
 import kotlin.Comparator
 
 fun <T> priorityQueue(capacity: Int, block: (Comparator<T>)) =

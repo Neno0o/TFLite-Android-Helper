@@ -1,0 +1,45 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion versions.compileSdkVersion
+
+    defaultConfig {
+        targetSdkVersion versions.targetSdkVersion
+        minSdkVersion versions.minSdkVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionName "1.0.0"
+    }
+
+    lintOptions {
+        textReport true
+    }
+
+    configurations {
+        ktlint
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlinVersion"
+    implementation "androidx.core:core-ktx:$versions.coreKtxVersion"
+
+    implementation "org.tensorflow:tensorflow-lite:$versions.tfliteVersion"
+
+    testImplementation "junit:junit:$versions.junitVersion"
+    androidTestImplementation "androidx.test:runner:$versions.runnerVersion"
+
+    ktlint "com.github.shyiko:ktlint:$versions.ktlintVersion"
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.github.shyiko.ktlint.Main"
+    args "src/**/*.kt"
+    args "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
+}
+
+apply from: 'bintray.gradle'
