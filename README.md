@@ -86,7 +86,7 @@ private lateinit var imageClassification: ImageClassification
 
 val interpreterOptions = Interpreter.Options()
 interpreterOptions.setNumThreads(4)
-interpreterOptions.setUseNNAPI(true) // If Android device support NNAPI
+interpreterOptions.setUseNNAPI(true) // If Android device supports NNAPI
 
 imageClassification = ImageClassification.create(
                 classifierModel = ClassifierModel.QUANTIZED,
