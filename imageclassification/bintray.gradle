@@ -89,7 +89,7 @@ bintray {
         desc = LIBRARY_DESCRIPTION
         websiteUrl = SITE_URL
         vcsUrl = GIT_URL
-        licenses = ['MIT']
+        licenses = ['Apache-2.0']
         dryRun = false
         publish = true
         override = false
