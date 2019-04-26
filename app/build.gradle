@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion versions.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.neno0o.tflitehelper"
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlinVersion"
+    implementation "androidx.core:core-ktx:$versions.coreKtxVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.kotlinCoroutines"
+
+    implementation "androidx.appcompat:appcompat:$versions.appCompatVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintLayoutVersion"
+
+    implementation "com.camerakit:camerakit:$versions.camerakitVerions"
+    implementation "com.camerakit:jpegkit:$versions.jpegkitVerions"
+
+    implementation(project(':imageclassification'))
+//    implementation 'com.neno0o.tflitehelper:imageclassification:1.0.0'
+
+    implementation "org.tensorflow:tensorflow-lite:$versions.tfliteVersion"
+
+    testImplementation "junit:junit:$versions.junitVersion"
+    androidTestImplementation "androidx.test:runner:$versions.runnerVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCoreVersion"
+}
