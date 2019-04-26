@@ -29,7 +29,10 @@ Maven
   <type>pom</type>
 </dependency>
 ```
-
+Add TensorFlow Lite library
+```groovy
+implementation "org.tensorflow:tensorflow-lite:latest_version"
+```
 ## Usage
 
 ### Image Classification
