@@ -8,6 +8,14 @@ This is an experimental library and subject to change. It's written entirely in 
 Gradle
 
 ```groovy
+repositories {
+        maven {
+            url  "https://dl.bintray.com/neno0o/tflite_helper"
+        }
+    }
+```
+
+```groovy
 implementation 'com.neno0o.tflitehelper:imageclassification:0.0.1'
 ```
 
