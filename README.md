@@ -1,8 +1,10 @@
 # TensorFlow Lite Helper for Android
 
-This library helps in getting started with TensorFlow Lite on Android. Inspired by [TensorFlow Lite Android image classification example](https://www.tensorflow.org/lite/models/image_classification/android)
+This library helps in getting started with TensorFlow Lite on Android. Inspired by [TensorFlow Lite Android image classification example](https://www.tensorflow.org/lite/models/image_classification/android).
 
 This is an experimental library and subject to change. It's written entirely in [Kotlin](https://kotlinlang.org/) and powered by [TensorFlow Lite](https://www.tensorflow.org/lite/).
+
+The library provides helper class for Image Classification at the minimum usage. In future releases, the library may provide helpers for Object Detection and Smart Reply.
 
 ## Download
 Gradle
@@ -36,8 +38,6 @@ implementation "org.tensorflow:tensorflow-lite:latest_version"
 ## Usage
 
 ### Image Classification
-The library provides a helper class for Image Classification at the minimum usage. In the future releases, the library may provide helpers for Object Detection and Smart Reply.
-
 To get started with Image Classification, get instance by providing your model and label paths in the asset folder to `create` factory method
 ```kotlin
 private lateinit var imageClassification: ImageClassification
@@ -50,7 +50,7 @@ imageClassification = ImageClassification.create(
             )
 ```
 
-To classify (recognize) an image, call `classifyImage` with `bitmap` of the image.
+To classify (recognize) an image, call `classifyImage` with `bitmap`..
 ```kotlin
 val results = imageClassification.classifyImage(bitmap)
 ```
@@ -67,7 +67,7 @@ withContext(Dispatchers.Main) {
 ```
 Check out the sample app for more details.
 
-`ImageClassification` uses default input size 224, you should override this value depending on your model, in `create` method. Also, you can override the number of results that will be returned, and the default confidence threshold.
+`ImageClassification` uses default input size 224, you should override this value depending on your model. Also, you can override the number of results that will be returned, and the default confidence threshold.
 ```kotlin
 imageClassification = ImageClassification.create(
                 classifierModel = ClassifierModel.QUANTIZED,
@@ -84,12 +84,16 @@ To configure the `Interpreter` via the `Interpreter.Options`, create instance of
 ```kotlin
 private lateinit var imageClassification: ImageClassification
 
+val interpreterOptions = Interpreter.Options()
+interpreterOptions.setNumThreads(4)
+interpreterOptions.setUseNNAPI(true) // If Android device support NNAPI
+
 imageClassification = ImageClassification.create(
                 classifierModel = ClassifierModel.QUANTIZED,
                 assetManager = assets,
                 modelPath = MODEL_PATH,
                 labelPath = LABEL_PATH,
-                interpreterOptions = InterpreterOptions object
+                interpreterOptions = interpreterOptions
             )
 ```
 
