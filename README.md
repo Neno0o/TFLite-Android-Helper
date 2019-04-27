@@ -1,6 +1,6 @@
 # TensorFlow Lite Helper for Android
 
-This library helps in getting started with TensorFlow Lite on Android. Inspired by [TensorFlow Lite Android image classification example](https://www.tensorflow.org/lite/models/image_classification/android).
+This library helps with getting started with TensorFlow Lite on Android. Inspired by [TensorFlow Lite Android image classification example](https://www.tensorflow.org/lite/models/image_classification/android).
 
 This is an experimental library and subject to change. It's written entirely in [Kotlin](https://kotlinlang.org/) and powered by [TensorFlow Lite](https://www.tensorflow.org/lite/).
 
