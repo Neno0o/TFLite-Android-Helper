@@ -54,7 +54,7 @@ dependencies {
     implementation "com.camerakit:jpegkit:$versions.jpegkitVerions"
 
     implementation(project(':imageclassification'))
-//    implementation 'com.neno0o.tflitehelper:imageclassification:1.0.0'
+//    implementation 'com.neno0o.tflitehelper:imageclassification:0.0.1'
 
     implementation "org.tensorflow:tensorflow-lite:$versions.tfliteVersion"
 

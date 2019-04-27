@@ -10,14 +10,6 @@ The library provides helper class for Image Classification at the minimum usage.
 Gradle
 
 ```groovy
-repositories {
-        maven {
-            url  "https://dl.bintray.com/neno0o/tflite_helper"
-        }
-    }
-```
-
-```groovy
 implementation 'com.neno0o.tflitehelper:imageclassification:0.0.1'
 ```
 

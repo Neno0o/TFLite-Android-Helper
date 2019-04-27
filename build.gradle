@@ -61,9 +61,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {
-            url  "https://dl.bintray.com/neno0o/tflite_helper"
-        }
     }
 
     tasks.withType(Javadoc).all {
