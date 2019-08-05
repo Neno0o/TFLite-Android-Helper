@@ -21,8 +21,6 @@ android {
     defaultConfig {
         targetSdkVersion versions.targetSdkVersion
         minSdkVersion versions.minSdkVersion
-
-        versionName "1.0.0"
     }
 
     lintOptions {
@@ -36,12 +34,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlinVersion"
-    implementation "androidx.core:core-ktx:$versions.coreKtxVersion"
+    implementation libs.kotlin.stdlib
+    implementation libs.androidx.corektx
 
-    implementation "org.tensorflow:tensorflow-lite:$versions.tfliteVersion"
+    implementation libs.tensorflow.lite
 
-    ktlint "com.github.shyiko:ktlint:$versions.ktlintVersion"
+    ktlint libs.kotlin.ktlint
 }
 
 task ktlint(type: JavaExec, group: "verification") {

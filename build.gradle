@@ -14,33 +14,17 @@
 
 buildscript {
 
+    apply from: 'dependency.gradle'
+
     ext.versions = [
-            'gradleVersion'          : '3.4.0',
-            'kotlinVersion'          : '1.3.30',
+            'gradleVersion'          : '3.4.2',
+            'kotlinVersion'          : '1.3.41',
             'mavenPluginVersion'     : '2.1',
             'bintrayPluginVersion'   : '1.8.4',
 
             'compileSdkVersion'      : 28,
             'minSdkVersion'          : 15,
-            'targetSdkVersion'       : 28,
-
-            'appCompatVersion'       : '1.0.2',
-            'constraintLayoutVersion': '1.1.3',
-
-            'kotlinCoroutines'       : '1.1.1',
-            'coreKtxVersion'         : '1.0.1',
-
-            'testCoreVersion'        : '1.1.0',
-            'junitVersion'           : '4.12',
-            'runnerVersion'          : '1.1.1',
-            'espressoCoreVersion'    : '3.1.1',
-
-            'ktlintVersion'          : '0.30.0',
-
-            'tfliteVersion'          : '1.13.1',
-
-            'camerakitVerions'       : '1.0.0-beta3.10',
-            'jpegkitVerions'         : '0.1.0'
+            'targetSdkVersion'       : 28
     ]
 
     repositories {

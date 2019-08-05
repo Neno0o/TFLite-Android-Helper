@@ -43,22 +43,23 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlinVersion"
-    implementation "androidx.core:core-ktx:$versions.coreKtxVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.kotlinCoroutines"
+    implementation libs.kotlin.stdlib
+    implementation libs.androidx.corektx
 
-    implementation "androidx.appcompat:appcompat:$versions.appCompatVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintLayoutVersion"
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
 
-    implementation "com.camerakit:camerakit:$versions.camerakitVerions"
-    implementation "com.camerakit:jpegkit:$versions.jpegkitVerions"
+    implementation libs.kotlin.coroutines
+
+    implementation libs.camerakit.camerakit
+    implementation libs.camerakit.jpegkit
 
     implementation(project(':imageclassification'))
 //    implementation 'com.neno0o.tflitehelper:imageclassification:0.0.1'
 
-    implementation "org.tensorflow:tensorflow-lite:$versions.tfliteVersion"
+    implementation libs.tensorflow.lite
 
-    testImplementation "junit:junit:$versions.junitVersion"
-    androidTestImplementation "androidx.test:runner:$versions.runnerVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoCoreVersion"
+    testImplementation libs.junit.junit
+    androidTestImplementation libs.androidx.runner
+    androidTestImplementation libs.androidx.espresso
 }
