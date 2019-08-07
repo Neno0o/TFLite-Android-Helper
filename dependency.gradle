@@ -28,7 +28,7 @@ kotlin.ktlint = "com.github.shyiko:ktlint:0.30.0"
 kotlin.coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
 
 def tensorflow = [:]
-tensorflow.lite = "org.tensorflow:tensorflow-lite:1.13.1"
+tensorflow.lite = "org.tensorflow:tensorflow-lite:1.14.0"
 
 def camerakit = [:]
 camerakit.camerakit = "com.camerakit:camerakit:1.0.0-beta3.10"
